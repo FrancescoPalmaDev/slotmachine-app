@@ -19,15 +19,33 @@ func main() {
 		"D": 2,
 	}*/
 	symbolArr := generateSymbolArray(symbols)
-	spin := getSpin(symbolArr, 3, 3)
-	fmt.Println(spin)
 
 	balance := uint(200)
 	getName()
-	bet := getBet(balance)
-	fmt.Println(bet)
-	balance = balance - bet
+
+	for balance > 0 {
+		bet := getBet(balance)
+		if bet == 0 {
+			break
+		}
+
+		balance -= bet
+		spin := getSpin(symbolArr, 3, 3)
+		printSpin(spin)
+	}
 	fmt.Println("Your current balance is: ", balance)
+}
+
+func printSpin(spin [][]string) {
+	for _, row := range spin {
+		for j, symbol := range row {
+			fmt.Printf(symbol)
+			if j != len(row)-1 {
+				fmt.Printf(" | ")
+			}
+		}
+		fmt.Println()
+	}
 }
 
 func getRandomNumber(min int, max int) int {
